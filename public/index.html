@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>NoteTaker</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <style media="screen">
+      body {
+        text-align: center;
+        background-color: cornflowerblue;
+      }
+      h1 {
+        font-size: 40px;
+        color: white;
+      }
+      .deleter {
+        margin-left: 20px;
+        color: red;
+        cursor: pointer;
+        text-align: right;
+      }
+      .note-adder {
+        margin-left: 20px;
+        color: red;
+        cursor: pointer;
+        text-align: right;
+      }
+      input {
+        width: 400px;
+        height: 50px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 42px;
+        background-color: antiquewhite;
+      }
+      textarea {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 24px;
+        background-color: antiquewhite;
+
+      }
+      .dataTitle {
+        cursor: pointer;
+        font-size: 24px;
+      }
+      #articles {
+        width: 90%;
+        height: 600px;
+        overflow: auto;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: antiquewhite;
+      }
+      #actionbutton {
+        display: inline-block;
+      }
+      #buttons {
+        margin: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Cheerio Scraper App</h1>
+    <div id="userinput">
+        <p>Note</p>
+        <textarea id="note"></textarea>
+      <div id="buttons">
+        <div id="actionbutton">
+          <button id="scrape">Scrape</button>
+        </div>
+        <button id="clearall">Delete All Articles</button>
+      </div>
+    </div>
+
+    <div id="articles"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
