@@ -29,8 +29,8 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://heroku_ld3wsc3m:i1ec498p6v14eei805tsb9e09@ds159050.mlab.com:59050/heroku_ld3wsc3m");
-// mongoose.connect("mongodb://localhost/mongonyscrapedb");
+// mongoose.connect("mongodb://heroku_ld3wsc3m:i1ec498p6v14eei805tsb9e09@ds159050.mlab.com:59050/heroku_ld3wsc3m");
+mongoose.connect("mongodb://localhost/mongonyscrapedb");
 var db = mongoose.connection;
 
 // Show any mongoose errors
@@ -116,6 +116,29 @@ app.get("/deleteall", function(req, res) {
 });
 
 // Add Note to an article in the DB
+app.get("/viewnote/:id", function(req, res) {
+  console.log("entered view note id");
+  console.log("req.params.id = ", req.params.id);
+  // use the article id to find the note
+  Article.find({ _id: req.params.id})
+  .populate("notes")
+  .exec(function(error, found) {
+    // Log any errors from mongojs
+    if (error) {
+      console.log("error updating =", error);
+      res.send(error);
+    }
+    // Otherwise, send the mongojs response to the browser
+    // This will fire off the success function of the ajax request
+    else {
+      console.log("found note");
+      res.send(found);
+    }
+  });     
+});
+
+
+// Add Note to an article in the DB
 app.post("/addnote/:id", function(req, res) {
 	console.log("entered add note id");
 	console.log("req.params.id = ", req.params.id);
@@ -128,8 +151,7 @@ app.post("/addnote/:id", function(req, res) {
 			console.log("error writing new note");
 		} else {
 		  // use the article id to find and update the note
-		  	Article.findOneAndUpdate({ _id: req.params.id}, {note:data._id})
-		    .exec(function(error, updated) {
+		  	Article.findOneAndUpdate({ _id: req.params.id}, {$push: {"notes":data._id} }, {new:true }, function(error, updated) {
 			    // Log any errors from mongojs
 			  	if (error) {
 			      console.log("error updating =", error);
@@ -177,19 +199,17 @@ app.get("/scrape", function(req, res) {
 	      entry.save(function(err, doc) {
 	        // Log any errors
 	        if (err) {
-	          console.log("error storing scraped to db", err);
+	          console.log("error storing scraped to db");
 	        }
 	        // Or log the doc
 	        else {
-	          console.log(doc);
+	          console.log("stored");
 	        }
 	      });
 	    });
 	  });
   	}
   });
-  // Tell the browser that we finished scraping the text
-  res.send("Scrape Complete");
 });
 
 
