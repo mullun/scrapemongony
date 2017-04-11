@@ -67,6 +67,7 @@ $(document).on("click", ".note-adder", function() {
     success: function(response) {
       // Clear the inputs
       $("#note").val("");
+      console.log("note section cleared");
       // Make sure the #actionbutton is submit (in case it's update)
       $("#actionbutton").html("<button id='scrape'>Scrape</button>");
     }
