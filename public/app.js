@@ -53,8 +53,10 @@ $(document).on("click", ".note-adder", function() {
   console.log("entered click for note-adder");
   // Save the p tag that encloses the button
   var selected = $(this).parent();
+  console.log("selected = " + selected);
   // Make an AJAX GET request to delete the specific note
   // this uses the data-id of the p-tag, which is linked to the specific note
+
   $.ajax({
     type: "POST",
     url: "/addnote/" + selected.attr("data-id"),
@@ -80,25 +82,48 @@ $(document).on("click", ".note-viewer", function() {
   console.log("entered click for note-viewer");
   // Save the p tag that encloses the button
   var selected = $(this).parent();
+  console.log("selected in note viewer = " + selected);
   // Make an AJAX GET request to delete the specific note
   // this uses the data-id of the p-tag, which is linked to the specific note
+
   $.ajax({
-    type: "GET",
-    url: "/viewnote/" + selected.attr("data-id"),
-    // On successful call
+    type:"GET",
+    url:"/viewnote/" + selected.attr("data-id"), 
     success: function(response) {
       // Fill the text boxes with the received data
       console.log("view note response = ");
       console.log(response[0].notes);
+      // clear what is there
       $("#note").empty();
       for (var i = 0; i < response[0].notes.length; i++) {
         $("#note").append(response[0].notes[i].title);
         $("#note").append("\n");
+        console.log("inside for loop");
       }
       // Make sure the #actionbutton is submit (in case it's update)
       $("#actionbutton").html("<button id='scrape'>Scrape</button>");
     }
   });
+
+
+  // $.ajax({
+  //   type: "GET",
+  //   url: "/viewnote/" + selected.attr("data-id"),
+  //   // On successful call
+  //   success: function(response) {
+  //     // Fill the text boxes with the received data
+  //     console.log("view note response = ");
+  //     console.log(response[0].notes);
+  //     // clear what is there
+  //     $("#note").val("");
+  //     for (var i = 0; i < response[0].notes.length; i++) {
+  //       $("#note").append(response[0].notes[i].title);
+  //       $("#note").append("\n");
+  //     }
+  //     // Make sure the #actionbutton is submit (in case it's update)
+  //     $("#actionbutton").html("<button id='scrape'>Scrape</button>");
+  //   }
+  // });
 });
 
 

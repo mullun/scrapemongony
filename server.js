@@ -132,7 +132,7 @@ app.get("/viewnote/:id", function(req, res) {
     // This will fire off the success function of the ajax request
     else {
       console.log("found note");
-      res.send(found);
+      res.json(found);
     }
   });     
 });
